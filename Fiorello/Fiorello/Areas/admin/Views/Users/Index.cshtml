@@ -1,0 +1,93 @@
+﻿@model List<UserVM>
+
+<div class="row">
+    <div class="col-12">
+        <!-- Bootstrap Dark Table -->
+        <div class="card">
+            <div class="d-flex justify-content-between align-items-xl-center">
+                <h5 class="card-header">Users</h5>
+
+                <div style="margin-right:5px">
+                    <a asp-action="Create" class="btn btn-primary text-white">Create</a>
+                </div>
+            </div>
+
+            <div class="table-responsive text-nowrap">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th>Fullname</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+
+                            <th style="text-align:right">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach (UserVM item in Model)
+                        {
+                            <tr>
+                                <td>@item.Fullname</td>
+                                <td>@item.Username</td>
+                                <td>@item.Email</td>
+                                <td>@item.Role</td>
+                                <td>
+                                    @if (item.IsDeactive)
+                                    {
+                                        <div class="text-danger">Passiv</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="text-success">Activ</div>
+                                    }
+                                </td>
+
+                                <td>
+                                    <div class="d-flex justify-content-end">
+                                        <div style="margin-right:5px">
+                                            <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-info">Update</a>
+                                        </div>
+                                        <div style="margin-right:5px">
+                                            <a asp-action="ResetPassword" asp-route-id="@item.Id" class="btn btn-success">ResetPassword</a>
+                                    </div>
+                                        @if(item.Username!= User.Identity.Name)
+                                        {
+                                            @if (item.IsDeactive)
+                                            {
+
+                                                <div style="margin-right:5px">
+                                                    <a asp-action="Activity" asp-route-id="@item.Id" class="btn btn-success">Activate</a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+
+                                                <div style="margin-right:5px">
+                                                    <a asp-action="Activity" asp-route-id="@item.Id" class="btn btn-danger">Deactivate</a>
+                                                </div>
+                                            }
+                                        }
+                                       
+
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--/ Bootstrap Dark Table -->
+
+
+    </div>
+</div>
+
+
+
+
+
